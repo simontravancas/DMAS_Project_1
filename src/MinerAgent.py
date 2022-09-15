@@ -26,7 +26,6 @@ class MinerAgent(mesa.Agent):
     def handleMessage(self, blockChain):
         if self.blockChain.getLastBlockNumber() < blockChain.getLastBlockNumber():
             self.blockChain = blockChain
-        pass
 
     def createNewBlockChain(self):
         newBlockChain = self.blockChain.block_array.copy()
