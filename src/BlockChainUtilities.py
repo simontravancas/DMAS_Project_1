@@ -14,5 +14,5 @@ class BlockChainUtilities():
     def getBlockchainString(blockchain):
         s = ""
         for i in blockchain.block_array:
-            s+=("BLOCK " + str(i.block_number) + " (miner " + str(i.miner_id) + ") -> ")
+            s+=("[ BLOCK " + str(i.block_number) + " (miner " + str(i.miner_id) + ") ] -> ")
         return s

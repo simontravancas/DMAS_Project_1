@@ -23,8 +23,8 @@ class MinerAgent(mesa.Agent):
             # broadcast
             self.model.broadcastMessage(self.blockChain, self)
 
-    def handleMessage(self):
-        pass
+    def handleMessage(self, blockchain):
+        print("TIME " + str(self.model.time) + ": agent " + str(self.unique_id) + " received blockchain " + BlockChainUtilities.getBlockchainString(blockchain))
 
     def createNewBlockChain(self):
         newBlockChain = self.blockChain.block_array.copy()
@@ -37,7 +37,7 @@ class MinerAgent(mesa.Agent):
     
 
     def runLottery(self):
-        if (self.unique_id == 1):
+        if (self.unique_id == 1 and self.model.time == 0):
             return 1
         else:
             return 0

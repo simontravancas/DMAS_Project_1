@@ -21,15 +21,28 @@ class NetworkModel(mesa.Model):
 
     def step(self):
         """Advance the model by one step."""
-        self.time+=1
         # pprint(vars(self))
         self.schedule.step()
+
+        self.time+=1
+
+        if (len(self.message_queue) > 0):
+            # while first message is supposed to arrive now
+            while(self.message_queue[0].time <= self.time):
+                # send message to destination
+                self.message_queue[0].destination.handleMessage(self.message_queue[0].blockchain)
+                # remove first message from queue (it has already been processed)
+                self.message_queue.remove(self.message_queue[0])
+                # if queue is empty, do not crash
+                if (len(self.message_queue) <= 0):
+                    break
 
     def broadcastMessage(self, blockchain, miner):
         for miner in self.agents_array:
             # "10" is not supposed to be hardcoded - we will calculate it later
             msg = Message(blockchain, self.time + 10 + numpy.random.rand()*10, miner)
             self.message_queue.append(msg)
+        self.message_queue.sort(key=lambda msg: msg.time)
 
         self.printQueueState()
 
