@@ -17,9 +17,14 @@ class MinerAgent(mesa.Agent):
 
     def step(self):
         if (self.runLottery()):
-            # pass
             print("agent " + str(self.unique_id) + " mined a block at time " + str(self.model.time))
             self.blockChain = self.createNewBlockChain()
+            
+            # broadcast
+            self.model.broadcastMessage(self.blockChain, self)
+
+    def handleMessage(self):
+        pass
 
     def createNewBlockChain(self):
         newBlockChain = self.blockChain.block_array.copy()
@@ -32,6 +37,11 @@ class MinerAgent(mesa.Agent):
     
 
     def runLottery(self):
+        if (self.unique_id == 1):
+            return 1
+        else:
+            return 0
+
         if (numpy.random.rand() < 0.001):
             return 1
         else:
