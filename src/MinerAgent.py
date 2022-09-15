@@ -38,10 +38,10 @@ class MinerAgent(mesa.Agent):
     
 
     def runLottery(self):
-        if (self.unique_id == 1 and self.model.time == 0):
+        if ((self.unique_id == 1 and self.model.time == 0) or (self.unique_id == 2 and self.model.time == 2)):
             return 1
-        else:
-            return 0
+        # else:
+        #     return 0
 
         if (numpy.random.rand() < 0.001):
             return 1
