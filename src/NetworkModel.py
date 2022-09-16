@@ -13,9 +13,10 @@ class NetworkModel(mesa.Model):
         self.schedule = mesa.time.RandomActivation(self)
         self.agents_array = []
         self.message_queue = []
+        genesis_blockchain = BlockChainUtilities.create_genesis_blockchain()
         # Create agents
         for i in range(self.num_agents):
-            a = MinerAgent(i, self, 1, Position(numpy.random.rand(), numpy.random.rand()))
+            a = MinerAgent(i, self, 1, Position(numpy.random.rand(), numpy.random.rand()), genesis_blockchain)
             self.agents_array.append(a)
             self.schedule.add(a)
 
