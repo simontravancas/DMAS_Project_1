@@ -5,6 +5,7 @@ from MinerAgent import MinerAgent
 from Position import Position
 from pprint import pprint
 from Message import Message
+from Strategy import Strategy
 
 class NetworkModel(mesa.Model):
     def __init__(self, N):
@@ -17,10 +18,15 @@ class NetworkModel(mesa.Model):
         genesis_blockchain = BlockChainUtilities.create_genesis_blockchain()
         self.timeMultiplier = 100
         self.timeRandomnessMultiplier = 100
+        self.proportionOfSelfishMiners = 0.1
         # Create agents
         for i in range(self.num_agents):
             pos = Position(numpy.random.rand(), numpy.random.rand())
-            a = MinerAgent(i, self, 1, pos, genesis_blockchain)
+            strategy = Strategy.NORMAL
+            # "i == 4" is temporary for testing only
+            if numpy.random.rand() < self.proportionOfSelfishMiners or i == 4 :
+                strategy = Strategy.SELFISH
+            a = MinerAgent(i, self, 1, pos, strategy, genesis_blockchain)
             self.space.place_agent( a, (pos.x, pos.y) )
             self.agents_array.append(a)
             self.schedule.add(a)
@@ -45,6 +51,9 @@ class NetworkModel(mesa.Model):
 
     def broadcastMessage(self, blockchain, miner):
         for destination in self.agents_array:
+            if destination.unique_id == miner.unique_id:
+                # print("Trying to broadcast a message to myself (" + str(destination.unique_id) + ")")
+                continue
             pos1 = miner.position
             pos2 = destination.position
             distance = self.space.get_distance([pos1.x, pos1.y], [pos2.x, pos2.y])
