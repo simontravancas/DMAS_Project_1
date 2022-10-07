@@ -26,3 +26,12 @@ class BlockChainManager():
                 print("TEMPORARY FORK between blockchains:")
                 print(s1)
                 print(s2)
+
+    @staticmethod
+    def printAllBlockchains():
+        for i in range(len(BlockChainManager.blockChainList)):
+            print("Blockchain " + str(i))
+            s1 = ""
+            for j in BlockChainManager.blockChainList[i].block_array:
+                s1+=("[ BLOCK " + str(j.block_number) + " (miner " + str(j.miner_id) + ") ] -> ")
+                print(s1)

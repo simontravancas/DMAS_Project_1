@@ -9,14 +9,19 @@ from Message import Message
 class NetworkModel(mesa.Model):
     def __init__(self, N):
         self.num_agents = N
+        self.space = mesa.space.ContinuousSpace(1,1,True,0,0)
         self.time = 0
         self.schedule = mesa.time.RandomActivation(self)
         self.agents_array = []
         self.message_queue = []
         genesis_blockchain = BlockChainUtilities.create_genesis_blockchain()
+        self.timeMultiplier = 100
+        self.timeRandomnessMultiplier = 100
         # Create agents
         for i in range(self.num_agents):
-            a = MinerAgent(i, self, 1, Position(numpy.random.rand(), numpy.random.rand()), genesis_blockchain)
+            pos = Position(numpy.random.rand(), numpy.random.rand())
+            a = MinerAgent(i, self, 1, pos, genesis_blockchain)
+            self.space.place_agent( a, (pos.x, pos.y) )
             self.agents_array.append(a)
             self.schedule.add(a)
 
@@ -39,13 +44,15 @@ class NetworkModel(mesa.Model):
                     break
 
     def broadcastMessage(self, blockchain, miner):
-        for miner in self.agents_array:
-            # "10" is not supposed to be hardcoded - we will calculate it later
-            msg = Message(blockchain, self.time + 10 + numpy.random.rand()*10, miner)
+        for destination in self.agents_array:
+            pos1 = miner.position
+            pos2 = destination.position
+            distance = self.space.get_distance([pos1.x, pos1.y], [pos2.x, pos2.y])
+            msg = Message(blockchain, self.time + distance*self.timeMultiplier + numpy.random.rand()*self.timeRandomnessMultiplier, destination)
             self.message_queue.append(msg)
         self.message_queue.sort(key=lambda msg: msg.time)
 
-        self.printQueueState()
+        # self.printQueueState()
 
     def printQueueState(self):
         for msg in self.message_queue:
