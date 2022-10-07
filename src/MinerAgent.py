@@ -44,7 +44,7 @@ class MinerAgent(mesa.Agent):
         # else:
         #     return 0
 
-        if (numpy.random.rand() < 0.0001):
+        if (numpy.random.rand() < 0.0000016666): #1.666 10e-6
             return 1
         else:
             return 0
