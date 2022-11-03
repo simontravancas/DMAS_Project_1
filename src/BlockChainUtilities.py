@@ -4,11 +4,11 @@ from BlockChain import BlockChain
 class BlockChainUtilities():
     @staticmethod
     def create_genesis_block():
-        return Block(0, -1)
+        return Block(0, -1, 0)
 
     @staticmethod
     def create_genesis_blockchain():
-        return BlockChain([Block(0, -1)])
+        return BlockChain([Block(0, -1, 0)])
 
     @staticmethod
     def getBlockchainString(blockchain):

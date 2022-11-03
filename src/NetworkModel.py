@@ -18,9 +18,9 @@ class NetworkModel(mesa.Model):
         self.agents_array = []
         self.message_queue = []
         genesis_blockchain = BlockChainUtilities.create_genesis_blockchain()
-        self.timeMultiplier = 100
-        self.timeRandomnessMultiplier = 100
-        self.lag_spike_time = 100
+        self.timeMultiplier = 10
+        self.timeRandomnessMultiplier = 10
+        self.lag_spike_time = 10
         self.cluster_positions = []
         # Create clusters
         for i in range(self.num_clusters):
@@ -75,7 +75,7 @@ class NetworkModel(mesa.Model):
             distance = self.space.get_distance([pos1.x, pos1.y], [pos2.x, pos2.y])
             time_of_arrival = self.time + distance*self.timeMultiplier + numpy.random.rand()*self.timeRandomnessMultiplier
             if (miner.cluster_id != destination.cluster_id):
-                print(f"hey, agents {miner.unique_id} and {destination.unique_id} have different cluster ids! ({miner.cluster_id} and {destination.cluster_id})")
+                # print(f"hey, agents {miner.unique_id} and {destination.unique_id} have different cluster ids! ({miner.cluster_id} and {destination.cluster_id})")
                 time_of_arrival += self.lag_spike_time
             msg = Message(blockchain, time_of_arrival, destination)
             self.message_queue.append(msg)

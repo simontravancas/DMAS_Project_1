@@ -36,17 +36,17 @@ class MinerAgent(mesa.Agent):
 
 
     def createNewBlock(self):
-        return Block(self.blockChain.getLastBlock().block_number + 1, self.unique_id)
+        return Block(self.blockChain.getLastBlock().block_number + 1, self.unique_id, self.model.time)
     
 
     def runLottery(self):
-        if ((self.unique_id == 1 and self.model.time == 0) or (self.unique_id == 2 and self.model.time == 2)):
-            return 1
+        # if ((self.unique_id == 1 and self.model.time == 0) or (self.unique_id == 2 and self.model.time == 2)):
+        #     return 1
         # else:
         #     return 0
 
         # if (numpy.random.rand() < 0.0000016666): #1.666 10e-6
-        if (numpy.random.rand() < 0.0016666): #1.666 10e-6
+        if (numpy.random.rand() < 0.0000016666): #1.666 10e-6
             return 1
         else:
             return 0
