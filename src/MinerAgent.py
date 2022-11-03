@@ -6,12 +6,13 @@ import numpy
 
 class MinerAgent(mesa.Agent):
 
-    def __init__(self, unique_id, model, compute_power, position, genesis_blockChain):
+    def __init__(self, unique_id, model, compute_power, position, cluster_id, genesis_blockChain):
         super().__init__(unique_id, model)
         self.unique_id = unique_id
         self.model = model
         self.compute_power = compute_power
         self.position = position
+        self.cluster_id = cluster_id
         self.blockChain = genesis_blockChain
         # self.blockChain = BlockChainUtilities.create_genesis_blockchain()
         # print("agent " + str(self.unique_id) + " started at position (" + str(position.x) + ", " + str(position.y) + ")" )
@@ -44,7 +45,8 @@ class MinerAgent(mesa.Agent):
         # else:
         #     return 0
 
-        if (numpy.random.rand() < 0.0000016666): #1.666 10e-6
+        # if (numpy.random.rand() < 0.0000016666): #1.666 10e-6
+        if (numpy.random.rand() < 0.0016666): #1.666 10e-6
             return 1
         else:
             return 0
