@@ -1,0 +1,16 @@
+NO LAG SPIKES
+
+Total positive diff forks: 198 (80.82%)
+Total negative diff forks: 47 (19.18%)
+Total forks: 245
+
+
+
+WITH LAG SPIKES
+
+Total positive diff forks: 311 (80.99%)
+Total negative diff forks: 73 (19.01%)
+Total forks: 384 (56.73% increase over no lag spikes)
+
+
+(notes: run3.txt is the run with lag spikes, and run4.txt is the run without lag spikes)
