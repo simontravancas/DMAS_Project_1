@@ -1,5 +1,11 @@
 10s timers, 10M WITHOUT spikes
 
+
+Total positive diff forks: 231
+Total negative diff forks: 130
+Total forks: 361
+
+
 [[45248, 8],
  [58509, 6],
  [73508, 7],
